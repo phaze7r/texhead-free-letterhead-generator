@@ -1,4 +1,4 @@
-# TexHead - Free Letterhead Generator
+# TexHead - Free Letterhead Generator for Biz Owners
 
 A professional, free-to-use letterhead generator built with Next.js. Create, preview, and download customized letterheads as high-quality PDFs instantly.
 

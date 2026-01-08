@@ -5,3 +5,8 @@ id_ed25519.pub
 *.pem
 *.key
 .env
+
+node_modules/
+.next/
+*.log
+.env
