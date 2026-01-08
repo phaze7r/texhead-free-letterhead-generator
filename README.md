@@ -1,2 +1,2 @@
-# texhead-free-letterhead-generator
-Free Letterhead generator for your employees
+# texhead Free Letterhead Generator
+Free Letterhead generator for your employees powered by Texodus Inc®
