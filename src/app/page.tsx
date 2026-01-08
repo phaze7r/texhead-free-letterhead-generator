@@ -25,6 +25,7 @@ Sincerely,`,
   employeeName: 'Your Name',
   employeeTitle: 'Your Title',
   employeeEmail: 'youremail@example.com',
+  employeePhone: '(123) 456-7890',
   employeeWebsite: 'www.texodus.tech',
 };
 

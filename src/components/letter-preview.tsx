@@ -2,7 +2,6 @@
 
 import { forwardRef } from 'react';
 import Image from 'next/image';
-import { AtSign, Phone, Globe } from 'lucide-react';
 
 import type { LetterDetails } from '@/lib/types';
 import { ScrollArea } from './ui/scroll-area';
@@ -61,9 +60,9 @@ export const LetterPreview = forwardRef<HTMLDivElement, LetterPreviewProps>(
                   <p className="font-sans text-xs md:text-sm text-slate-500">{details.employeeTitle || "Your Title"}</p>
                 </div>
                  <div className="text-right font-sans text-xs text-slate-500 space-y-1 flex-shrink-0">
-                  <p className="flex items-center justify-end gap-2"><AtSign className="h-3 w-3" /> {details.employeeEmail || "youremail@example.com"}</p>
-                  <p className="flex items-center justify-end gap-2"><Phone className="h-3 w-3" /> (123) 456-7890</p>
-                  <p className="flex items-center justify-end gap-2"><Globe className="h-3 w-3" /> {details.employeeWebsite || "www.your-website.com"}</p>
+                  <p>{details.employeeEmail || "youremail@example.com"}</p>
+                  <p>{details.employeePhone || "(123) 456-7890"}</p>
+                  <p>{details.employeeWebsite || "www.your-website.com"}</p>
                 </div>
               </div>
             </footer>

@@ -6,5 +6,6 @@ export type LetterDetails = {
   employeeName: string;
   employeeTitle: string;
   employeeEmail: string;
+  employeePhone: string;
   employeeWebsite: string;
 };

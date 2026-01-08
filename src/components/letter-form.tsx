@@ -76,6 +76,10 @@ export function LetterForm({ details, setDetails, signature, setSignature }: Let
                     <Input id="employeeEmail" name="employeeEmail" value={details.employeeEmail} onChange={handleChange} placeholder="youremail@example.com" />
                     </div>
                     <div className="space-y-2">
+                    <Label htmlFor="employeePhone">Your Phone</Label>
+                    <Input id="employeePhone" name="employeePhone" value={details.employeePhone} onChange={handleChange} placeholder="(123) 456-7890" />
+                    </div>
+                    <div className="space-y-2">
                     <Label htmlFor="employeeWebsite">Your Website</Label>
                     <Input id="employeeWebsite" name="employeeWebsite" value={details.employeeWebsite} onChange={handleChange} placeholder="www.your-website.com" />
                     </div>
