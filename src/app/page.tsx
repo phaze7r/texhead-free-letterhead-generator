@@ -44,7 +44,7 @@ export default function LetterGeneratorPage() {
         const canvas = await html2canvas(element as HTMLElement, {
             scale: 3,
             useCORS: true,
-            backgroundColor: '#1F2126',
+            backgroundColor: '#ffffff',
             height: element.scrollHeight,
         });
 

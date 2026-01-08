@@ -18,7 +18,7 @@ export const LetterPreview = forwardRef<HTMLDivElement, LetterPreviewProps>(
     return (
       <div
         ref={ref}
-        className="w-full h-full bg-card text-card-foreground overflow-hidden flex flex-col font-serif"
+        className="w-full h-full bg-white text-slate-900 overflow-hidden flex flex-col font-serif"
       >
         <ScrollArea className="flex-grow">
           <div className="min-h-full flex flex-col p-6 md:p-12">
@@ -35,15 +35,15 @@ export const LetterPreview = forwardRef<HTMLDivElement, LetterPreviewProps>(
                     />
                   )}
                   <div>
-                    <h2 className="font-sans text-3xl md:text-4xl font-bold text-foreground">{details.companyName || "Your Company"}</h2>
-                    <p className="font-sans text-sm md:text-base text-muted-foreground mt-1">{details.companyAddress || "123 Business Rd, Business City"}</p>
+                    <h2 className="font-sans text-3xl md:text-4xl font-bold text-slate-900">{details.companyName || "Your Company"}</h2>
+                    <p className="font-sans text-sm md:text-base text-slate-500 mt-1">{details.companyAddress || "123 Business Rd, Business City"}</p>
                   </div>
                 </div>
             </header>
             
             {/* Body */}
             <main className="flex-grow pt-8 md:pt-10">
-              <div className="whitespace-pre-wrap leading-relaxed text-foreground/90 font-sans text-sm md:text-base">
+              <div className="whitespace-pre-wrap leading-relaxed text-slate-800 font-sans text-sm md:text-base">
                 {details.letterBody.replace('[Employee Name]', details.employeeName) || "Start writing your letter body here."}
               </div>
             </main>
@@ -58,9 +58,9 @@ export const LetterPreview = forwardRef<HTMLDivElement, LetterPreviewProps>(
                     </div>
                   )}
                   <p className="font-sans font-bold text-sm md:text-base">{details.employeeName || "Your Name"}</p>
-                  <p className="font-sans text-xs md:text-sm text-muted-foreground">{details.employeeTitle || "Your Title"}</p>
+                  <p className="font-sans text-xs md:text-sm text-slate-500">{details.employeeTitle || "Your Title"}</p>
                 </div>
-                 <div className="text-right font-sans text-xs text-muted-foreground space-y-1 flex-shrink-0">
+                 <div className="text-right font-sans text-xs text-slate-500 space-y-1 flex-shrink-0">
                   <p className="flex items-center justify-end gap-2"><AtSign className="h-3 w-3" /> {details.employeeEmail || "youremail@example.com"}</p>
                   <p className="flex items-center justify-end gap-2"><Phone className="h-3 w-3" /> (123) 456-7890</p>
                   <p className="flex items-center justify-end gap-2"><Globe className="h-3 w-3" /> {details.employeeWebsite || "www.your-website.com"}</p>
