@@ -15,15 +15,15 @@ export function AppHeader() {
 
     const navLinks = [
         { href: '/', label: 'Letterhead' },
-        { href: '/contact', label: 'Contact' },
+        { href: '/blog', label: 'Blog' },
     ];
 
     return (
         <header className="bg-card border-b sticky top-0 z-20">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
-                <Link href="/" className="flex items-center gap-3">
-                    <Logo className="h-8 w-auto"/>
-                    <h1 className="text-xl font-headline font-bold text-foreground">TexHead</h1>
+                <Link href="/" className="flex items-center gap-2">
+                    <Logo className="h-8 w-8 shrink-0"/>
+                    <span className="text-xl font-headline font-bold text-foreground">TexHead</span>
                 </Link>
                 
                 {/* Desktop Nav */}
@@ -33,6 +33,9 @@ export function AppHeader() {
                             <Link href={link.href}>{link.label}</Link>
                         </Button>
                     ))}
+                    <Button asChild>
+                        <Link href="/contact">Contact Us</Link>
+                    </Button>
                 </nav>
 
                 {/* Mobile Nav */}
@@ -47,21 +50,20 @@ export function AppHeader() {
                         <SheetContent side="left">
                             <div className="flex flex-col h-full">
                                 <div className="flex items-center justify-between border-b pb-4">
-                                     <Link href="/" className="flex items-center gap-3" onClick={() => setIsMenuOpen(false)}>
-                                        <Logo className="h-8 w-auto"/>
-                                        <h1 className="text-xl font-headline font-bold text-foreground">TexHead</h1>
+                                     <Link href="/" className="flex items-center gap-2" onClick={() => setIsMenuOpen(false)}>
+                                        <Logo className="h-8 w-8 shrink-0"/>
+                                        <span className="text-xl font-headline font-bold text-foreground">TexHead</span>
                                     </Link>
-                                    <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(false)}>
-                                        <X />
-                                        <span className="sr-only">Close menu</span>
-                                    </Button>
                                 </div>
                                 <nav className="flex flex-col gap-4 mt-8">
                                     {navLinks.map((link) => (
-                                        <Button key={link.href} variant="ghost" asChild className={cn(pathname === link.href && 'bg-accent')} onClick={() => setIsMenuOpen(false)}>
+                                        <Button key={link.href} variant="ghost" asChild className={cn("justify-start", pathname === link.href && 'bg-accent')} onClick={() => setIsMenuOpen(false)}>
                                             <Link href={link.href}>{link.label}</Link>
                                         </Button>
                                     ))}
+                                    <Button asChild className="mt-4 w-full" onClick={() => setIsMenuOpen(false)}>
+                                        <Link href="/contact">Contact Us</Link>
+                                    </Button>
                                 </nav>
                             </div>
                         </SheetContent>

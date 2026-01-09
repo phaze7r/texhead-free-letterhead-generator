@@ -43,7 +43,10 @@ export const LetterPreview = forwardRef<HTMLDivElement, LetterPreviewProps>(
             {/* Body */}
             <main className="flex-grow pt-8 md:pt-10">
               <div className="whitespace-pre-wrap leading-relaxed text-slate-800 font-sans text-sm md:text-base">
-                {details.letterBody.replace('[Employee Name]', details.employeeName) || "Start writing your letter body here."}
+                {details.letterBody
+                  .replace(/\[Recipient Name\]/g, details.employerName || "[Recipient Name]")
+                  .replace(/\[Recipient Designation\]/g, details.employerDesignation || "[Recipient Designation]")
+                  || "Start writing your letter body here."}
               </div>
             </main>
           

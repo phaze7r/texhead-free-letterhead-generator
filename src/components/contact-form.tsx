@@ -48,6 +48,14 @@ export function ContactForm() {
             description: 'Thanks for reaching out. We will get back to you shortly.',
             className: 'bg-accent text-accent-foreground',
         });
+        
+        // Ask if they want to also send via WhatsApp for faster response
+        const confirmWhatsApp = window.confirm("Message recorded! Would you also like to open this message in WhatsApp for a faster response?");
+        if (confirmWhatsApp) {
+            const whatsappUrl = `https://wa.me/923236021204?text=${encodeURIComponent(`Hello, my name is ${values.name}. ${values.message}`)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+        
         form.reset();
     } catch (error: any) {
         toast({

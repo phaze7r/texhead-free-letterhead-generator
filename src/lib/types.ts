@@ -8,4 +8,6 @@ export type LetterDetails = {
   employeeEmail: string;
   employeePhone: string;
   employeeWebsite: string;
+  employerName: string;
+  employerDesignation: string;
 };

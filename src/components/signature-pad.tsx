@@ -70,10 +70,10 @@ export function SignaturePad({ signature, setSignature, employeeName }: Signatur
             const ctx = canvas.getContext('2d');
 
             if (ctx) {
-                ctx.fillStyle = '#1F2126';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                // Keep background transparent for the PNG
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                ctx.fillStyle = '#F5F2EF';
+                ctx.fillStyle = '#063970'; // Blue ink color
                 
                 const randomAngle = (Math.random() - 0.5) * 0.1;
                 const randomSize = 50 + (Math.random() - 0.5) * 10;
@@ -188,8 +188,8 @@ export function SignaturePad({ signature, setSignature, employeeName }: Signatur
                     <div className="flex flex-col items-center justify-center space-y-2">
                         <SignatureCanvas
                             ref={sigCanvas}
-                            penColor='#F5F2EF'
-                            canvasProps={{ className: 'bg-card border rounded-md w-full h-[150px]' }}
+                            penColor='#063970'
+                            canvasProps={{ className: 'bg-white border rounded-md w-full h-[150px]' }}
                         />
                          <div className="flex gap-2">
                             <Button type="button" size="sm" onClick={() => sigCanvas.current?.clear()}>

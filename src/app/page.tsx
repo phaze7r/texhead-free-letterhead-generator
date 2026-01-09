@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -10,23 +10,23 @@ import { Button } from '@/components/ui/button';
 import { Download, Loader2 } from 'lucide-react';
 import type { LetterDetails } from '@/lib/types';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { getSeoSettings } from '@/app/actions/seo';
+import { incrementCounter } from '@/app/actions/stats';
+import { StatsBanner } from '@/components/stats-banner';
+import { useToast } from '@/hooks/use-toast';
 
 const initialDetails: LetterDetails = {
-  companyName: 'Texodus',
-  companyAddress: '123 Business Rd, Suite 100, Business City, 12345',
+  companyName: '',
+  companyAddress: '',
   companyLogo: null,
-  letterBody: `This is to certify that [Employee Name] is an employee at our company.
-
-This is a sample letter body. You can edit this text to suit your needs. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.
-
-Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.
-
-Sincerely,`,
-  employeeName: 'Your Name',
-  employeeTitle: 'Your Title',
-  employeeEmail: 'youremail@example.com',
-  employeePhone: '(123) 456-7890',
-  employeeWebsite: 'www.texodus.tech',
+  letterBody: '',
+  employeeName: '',
+  employeeTitle: '',
+  employeeEmail: '',
+  employeePhone: '',
+  employeeWebsite: '',
+  employerName: '',
+  employerDesignation: '',
 };
 
 export default function LetterGeneratorPage() {
@@ -34,14 +34,56 @@ export default function LetterGeneratorPage() {
   const [signature, setSignature] = useState<string | null>(null);
   const [isDownloading, setIsDownloading] = useState(false);
   const letterRef = useRef<HTMLDivElement>(null);
+  
+  // Fetch stats on client side or pass as prop
+  const [settings, setSettings] = useState<any>(null);
+
+  useEffect(() => {
+    getSeoSettings().then(setSettings);
+  }, []);
+
+  const { toast } = useToast();
 
   const handleDownload = async () => {
+    // Validation
+    const requiredFields = [
+      { key: 'companyName', label: 'Company Name' },
+      { key: 'companyAddress', label: 'Company Address' },
+      { key: 'employeeName', label: 'Your Name' },
+      { key: 'employeeTitle', label: 'Your Title' },
+      { key: 'employeeEmail', label: 'Your Email' },
+      { key: 'letterBody', label: 'Letter Body' },
+      { key: 'employerName', label: 'Recipient Name' },
+      { key: 'employerDesignation', label: 'Recipient Designation' },
+    ];
+
+    const missingFields = requiredFields.filter(field => !details[field.key as keyof LetterDetails]);
+
+    if (missingFields.length > 0) {
+      toast({
+        variant: 'destructive',
+        title: 'Missing Information',
+        description: `Please fill in the following required fields: ${missingFields.map(f => f.label).join(', ')}`,
+      });
+      return;
+    }
+
+    if (!signature) {
+      toast({
+        variant: 'destructive',
+        title: 'Signature Required',
+        description: 'Please add your signature before downloading.',
+      });
+      return;
+    }
+
     const element = letterRef.current;
     if (!element) return;
     
     setIsDownloading(true);
     
     try {
+        await incrementCounter(details);
         const canvas = await html2canvas(element as HTMLElement, {
             scale: 3,
             useCORS: true,
@@ -83,17 +125,19 @@ export default function LetterGeneratorPage() {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <div className="max-w-4xl mx-auto text-center mb-12 space-y-4">
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground font-headline">
+            Free Online Letterhead Generator
+        </h1>
+        <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            Create professional, customized business letterheads in minutes. 
+            Upload your logo, add your details, and download a print-ready PDF—completely for free.
+        </p>
+      </div>
+
       <Card>
-          <CardHeader className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <CardTitle className="font-headline text-center md:text-left">Letterhead Generator</CardTitle>
-              <Button onClick={handleDownload} disabled={isDownloading} size="lg">
-                {isDownloading ? (
-                  <Loader2 className="animate-spin" />
-                ) : (
-                  <Download />
-                )}
-                Download PDF
-              </Button>
+          <CardHeader>
+              <CardTitle className="font-headline text-center md:text-left">Configure Your Letterhead</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
@@ -103,6 +147,8 @@ export default function LetterGeneratorPage() {
                   setDetails={setDetails}
                   signature={signature}
                   setSignature={setSignature}
+                  handleDownload={handleDownload}
+                  isDownloading={isDownloading}
                 />
               </div>
               <div className="md:col-span-3 flex justify-center md:justify-start">
@@ -113,6 +159,10 @@ export default function LetterGeneratorPage() {
             </div>
           </CardContent>
       </Card>
+
+      {settings?.showCounter && (
+        <StatsBanner total={settings.totalGenerated} />
+      )}
     </div>
   );
 }
